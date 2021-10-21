@@ -1,0 +1,1 @@
+echo "something" > "$1_data.txt"

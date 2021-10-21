@@ -7,7 +7,7 @@ namespace BashCallDemoHelpers
 {
     public static class ShellHelper
     {
-        public static Task<int> Bash(this string cmd, ILog log)
+        public static Task<int> Bash(this string cmd, ILog log, String consoleOut)
         {
             var source = new TaskCompletionSource<int>();
             var escapedArgs = cmd.Replace("\"", "\\\"");
@@ -43,6 +43,7 @@ namespace BashCallDemoHelpers
             try
             {
                 process.Start();
+                consoleOut = process.StandardOutput.ReadToEnd();
             }
             catch (Exception e)
             {
