@@ -13,13 +13,22 @@ namespace BashCallDemo
             Console.WriteLine("Executing bash...");
             String output = string.Empty;
             string guid = Guid.NewGuid().ToString();
-            $". script.sh {guid}".Bash(log, output);
+            var command = $". script.sh {guid}";
+            command.Bash(log, output);
 
-            var datafile = $"{guid}_data.txt";
+
+            var datafile = $"{Directory.GetCurrentDirectory()}/{guid}_data";
+            var filelist = Directory.GetFiles(Directory.GetCurrentDirectory());
+            foreach(var file in filelist)
+            {
+                Console.WriteLine($"File found in directory: {file}");
+            }
+            
+            Console.WriteLine($"File to check: {datafile}");
             if(File.Exists(datafile))
             {
                 output = System.IO.File.ReadAllText(datafile);
-                File.Delete($"{guid}_data.txt");
+                File.Delete(datafile);
             }
 
             Console.WriteLine($"Output: {output}");
